@@ -19,9 +19,10 @@ ws = wb[wb.sheetnames[0]]
 today = datetime.date.today()
 # 逐列檢查
 for target in ws:
-    content = target[0].value
-    if content == '項目':
+    #第一列標題列, 略過
+    if target[0].row == 1:
         continue
+    target_title = target[0].value
     # xlsx讀入是datetime無法加減, 要轉換為date
     target_date = target[1].value.date()
 
@@ -34,7 +35,7 @@ for target in ws:
     # 距離目標日期剩下天數
     remain_days = (target_date - today).days
     if remain_days == notify_before_days:
-        msg += '\n' + content
+        msg += '\n{title} {d}'.format(title=target_title, d=target_date.strftime('%m/%d'))
 
 # 設定line token(建議定義在電腦環境變數內)
 line_notify.setToken(os.environ['DATE_TOKEN'])

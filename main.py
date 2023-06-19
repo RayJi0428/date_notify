@@ -25,7 +25,7 @@ for target in ws:
     target_title = target[0].value
     # xlsx讀入是datetime無法加減, 要轉換為date
     target_date = target[1].value.date()
-    target_date.replace(year=today.year)
+    target_date = target_date.replace(year=today.year)
     # 已過日期要加1年
     if target_date.month < today.month:
         target_date = datetime.date(
